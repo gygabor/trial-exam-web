@@ -43,9 +43,11 @@ app.get('/decode/all', function(req, res) {
 
 
 app.post('/decode', function a(req, res) {
-  console.log(req.body);
-  console.log(decoder.decodeText(req.body.number, req.body.text));
-
+  var decodedText = (decoder.decodeText(req.body.shift, req.body.text));
+  connection.query('INSERT INTO text (text) VALUES ("' + decodedText + '");', function(err, rows, fields) {
+		if (err) throw err;
+  	res.send(rows);
+	});
   // new_text = coder(req.body),
   //
   // var text = {
