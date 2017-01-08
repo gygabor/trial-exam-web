@@ -38,14 +38,15 @@ var ajax = (function (){
 
   var APIEndpoint = 'http://localhost:3000/';
 
+  function get (callback){
+    open('GET', '/decode/all', false, callback);
+  }
+  
   function send (text, number, callback){
     var data = {"shift": number, "text": text};
     open('POST', '/decode', data, callback);
   }
 
-  function get (callback){
-  	open('GET', '/decode', false, callback);
-  }
 
   function open (method, resource, data, callback){
     var xhr = new XMLHttpRequest();
