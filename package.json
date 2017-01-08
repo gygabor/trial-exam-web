@@ -1,0 +1,20 @@
+{
+  "name": "trial-exam-web",
+  "version": "1.0.0",
+  "description": "### Getting Started  - Fork this repository under your own account  - Clone the forked repository to your computer  - Commit your progress frequently and with descriptive commit messages  - All your answers and solutions should go in this repository",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gygabor/trial-exam-web.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gygabor/trial-exam-web/issues"
+  },
+  "homepage": "https://github.com/gygabor/trial-exam-web#readme"
+}
