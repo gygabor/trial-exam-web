@@ -22,8 +22,13 @@ module.exports.decodeText = function (number, text) {
   //   return err
   // };
 
+
+
   //solution by Evan Hahn: https://gist.github.com/EvanHahn/2587465
-  //it needed some modification
+
+  //it needed some modification. I've tried some approach as you can see above.
+  //It was fun. And I want to ask you, how can I use Revealing Module Pattern here.
+  //It didn't work.
 
 	var decodedText = '';
   var exp = /[a-zA-Z]/;

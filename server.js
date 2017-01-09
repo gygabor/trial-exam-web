@@ -27,36 +27,42 @@ var connection = mysql.createConnection({
 
 connection.connect(function (error){
   if (error) {
-    console.log('muhahaha', error);
+    console.log('Server doesn\'t response', error);
     console.end;
   } else {
-    console.log ('WOOOOWW');
+    console.log ('Server working!');
   }
 });
 
 app.get('/decode/all', function(req, res) {
 	connection.query('SELECT * FROM text', function(err, rows, fields) {
 		if (err) throw err;
-  	res.send(rows);
+    var response = {"all": []}
+    rows.forEach(function(row){
+      response.all.push(row.text);
+    });
+  	res.send(response);
 	});
 });
 
-
 app.post('/decode', function a(req, res) {
-  var decodedText = (decoder.decodeText(req.body.shift, req.body.text));
-  connection.query('INSERT INTO text (text) VALUES ("' + decodedText + '");', function(err, rows, fields) {
-		if (err) throw err;
-  	res.send(rows);
-	});
-  // new_text = coder(req.body),
-  //
-  // var text = {
-  //   id: jason.length + 1,
-  //   orig_text: req.body.text,
-  //   new_text: new_text
-  // };
-  // jason.push(text);
-  // res.send(JSON.stringify(todo));
+  if ((req.body.shift < -25) || (req.body.shift > 25)){
+    var response = {
+    "status": "error",
+    "error": "Shift is out of bound"
+    }
+    res.send(response);
+  }else {
+    var decodedText = (decoder.decodeText(req.body.shift, req.body.text));
+    connection.query('INSERT INTO text (text) VALUES ("' + decodedText + '");', function(err, rows, fields) {
+  		if (err) throw err;
+      var response = {
+        "status": "ok",
+        "text": decodedText
+      }
+    	res.send(response);
+    });
+	}
 });
 
 
