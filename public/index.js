@@ -49,6 +49,7 @@ var ajax = (function (){
     var xhr = new XMLHttpRequest();
 		data = (data) ? data : null;
 		xhr.open( method, APIEndpoint + resource );
+    xhr.setRequestHeader('Content-Type', 'application/json');
     console.log(JSON.stringify(data))
 		xhr.send( JSON.stringify(data) );
 		xhr.onreadystatechange = function (rsp) {
