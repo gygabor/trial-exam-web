@@ -3,7 +3,7 @@ main {
   height: 300px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;;
   box-sizing: border-box;
 }
 

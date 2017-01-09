@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+  // res.header('Access-Control-Allow-Methods', 'POST, GET');
   next();
 });
 
@@ -45,7 +45,9 @@ app.get('/decode/all', function(req, res) {
 	});
 });
 
-app.post('/decode', function a(req, res) {
+app.post('/decode', urlencodedParser, function a(req, res) {
+  console.log(req.body)
+
   if ((req.body.shift < -25) || (req.body.shift > 25)){
     var response = {
     "status": "error",

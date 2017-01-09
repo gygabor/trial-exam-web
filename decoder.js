@@ -33,7 +33,6 @@ module.exports.decodeText = function (number, text) {
 	var decodedText = '';
   var exp = /[a-zA-Z]/;
   var step = parseInt(number);
-
 	for (var i = 0; i < text.length; i ++) {
 		var c = text[i];
     if (exp.test(c)) {

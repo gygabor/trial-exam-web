@@ -1,35 +1,36 @@
 'use strict';
 
 var control = (function (){
-  var submitButton = document.querySelector('button');
-  var text = document.querySelector('textarea');
-  var shiftNumber = document.querySelector('input');
+  var root = document.querySelector('main')
+  var submitButton = root.querySelector('button');
+  var text = root.querySelector('textarea');
+  var shiftNumber = root.querySelector('input');
 
-  function sendOrigText () {
+  function sendCodedText () {
     submitButton.addEventListener('click', function(){
-      ajax.send(text.value, shiftNumber.value, function(res){
+
+      var loadingText = document.createElement('p');
+      loadingText.className = 'loading';
+      loadingText.innerText = 'LOADING!'
+      root.appendChild(loadingText);
+
+      ajax.send(shiftNumber.value, text.value, function(res){
+        root.removeChild(loadingText);
+        renderText(res);
       });
     });
   }
 
-  // function playTrack (){
-  //   if (audio.paused()){
-  //     playButton.style.background = 'url(img/pause.svg) no-repeat';
-  //     playButton.style.backgroundPosition = 'center'
-  //     audio.play();
-  //   } else {
-  //     playButton.style.background = 'url(img/play.svg) no-repeat';
-  //     playButton.style.backgroundPosition = 'center'
-  //     audio.pause();
-  //   }
-  // }
-  //
-  // function loadTrack (url){
-  //   audio.load(url);
-  //   playTrack();
-  // };
+  function renderText(text){
+    var decodedText = document.createElement('p');
+    loadingText.className = 'decoded-text';
+    loadingText.innerText = text.text
+    root.appendChild(decodedText);
+  }
+
+
   return {
-    init: sendOrigText
+    init: sendCodedText
   }
 
 })();
@@ -39,12 +40,12 @@ var ajax = (function (){
   var APIEndpoint = 'http://localhost:3000/';
 
   function get (callback){
-    open('GET', '/decode/all', false, callback);
+    open('GET', 'decode/all', false, callback);
   }
-  
-  function send (text, number, callback){
-    var data = {"shift": number, "text": text};
-    open('POST', '/decode', data, callback);
+
+  function send (number, text, callback){
+    var data = {shift: number, text: text};
+    open('POST', 'decode', data, callback);
   }
 
 
@@ -52,6 +53,7 @@ var ajax = (function (){
     var xhr = new XMLHttpRequest();
 		data = (data) ? data : null;
 		xhr.open( method, APIEndpoint + resource );
+    console.log(data)
 		xhr.send( JSON.stringify(data) );
 		xhr.onreadystatechange = function (rsp) {
 			if( xhr.readyState === XMLHttpRequest.DONE ) {
