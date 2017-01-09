@@ -6,7 +6,7 @@ var control = (function (){
   var text = root.querySelector('textarea');
   var shiftNumber = root.querySelector('input');
   var loadingText = root.querySelector('.loading');
-  var decodedText = root.querySelector('ul');
+  var decodedText = document.querySelector('ul');
 
   function sendCodedText () {
     submitButton.addEventListener('click', function(){
@@ -15,14 +15,21 @@ var control = (function (){
 
       ajax.send(shiftNumber.value, text.value, function(res){
         loadingText.innerText = ''
-        // renderText(res);
+        renderText();
       });
     });
   }
 
-  // function renderText(text){
-  //
-  // }
+  function renderText(text){
+    ajax.get(function(res){
+      var allText = res.all;
+      allText.forEach(function(t){
+        var li = document.createElement('li');
+        li.innerText = t;
+        decodedText.appendChild(li);
+      })
+    });
+  }
 
 
   return {
@@ -50,7 +57,6 @@ var ajax = (function (){
 		data = (data) ? data : null;
 		xhr.open( method, APIEndpoint + resource );
     xhr.setRequestHeader('Content-Type', 'application/json');
-    console.log(JSON.stringify(data))
 		xhr.send( JSON.stringify(data) );
 		xhr.onreadystatechange = function (rsp) {
 			if( xhr.readyState === XMLHttpRequest.DONE ) {
@@ -59,7 +65,8 @@ var ajax = (function (){
     }
   }
   return {
-    send: send
+    send: send,
+    get: get
   }
 
 })();
