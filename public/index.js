@@ -5,28 +5,24 @@ var control = (function (){
   var submitButton = root.querySelector('button');
   var text = root.querySelector('textarea');
   var shiftNumber = root.querySelector('input');
+  var loadingText = root.querySelector('.loading');
+  var decodedText = root.querySelector('ul');
 
   function sendCodedText () {
     submitButton.addEventListener('click', function(){
 
-      var loadingText = document.createElement('p');
-      loadingText.className = 'loading';
       loadingText.innerText = 'LOADING!'
-      root.appendChild(loadingText);
 
       ajax.send(shiftNumber.value, text.value, function(res){
-        root.removeChild(loadingText);
-        renderText(res);
+        loadingText.innerText = ''
+        // renderText(res);
       });
     });
   }
 
-  function renderText(text){
-    var decodedText = document.createElement('p');
-    loadingText.className = 'decoded-text';
-    loadingText.innerText = text.text
-    root.appendChild(decodedText);
-  }
+  // function renderText(text){
+  //
+  // }
 
 
   return {
@@ -53,7 +49,7 @@ var ajax = (function (){
     var xhr = new XMLHttpRequest();
 		data = (data) ? data : null;
 		xhr.open( method, APIEndpoint + resource );
-    console.log(data)
+    console.log(JSON.stringify(data))
 		xhr.send( JSON.stringify(data) );
 		xhr.onreadystatechange = function (rsp) {
 			if( xhr.readyState === XMLHttpRequest.DONE ) {
