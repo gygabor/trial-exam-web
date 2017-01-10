@@ -7,7 +7,7 @@
 //     return(exp.test(text));
 //   }
 //   return {
-//     decodeText: decodeText
+//     module.exportsdecodeText: decodeText
 //   }
 // })();
 
@@ -60,7 +60,8 @@ module.exports.decodeText = function (number, text) {
       }
 
 		}else {
-      return ('string please');
+     	throw ('string please');
+			return;
     }
 
 		decodedText += c;
